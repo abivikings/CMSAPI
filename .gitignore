@@ -1,2 +1,8 @@
 
 base/__pycache__/__init__.cpython-310.pyc
+.idea/inspectionProfiles/profiles_settings.xml
+*.xml
+.idea/CMSAPI.iml
+CMSAPI/__pycache__/urls.cpython-39.pyc
+CMSAPI/__pycache__/urls.cpython-39.pyc
+.idea/workspace.xml
