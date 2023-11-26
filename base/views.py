@@ -101,7 +101,7 @@ def create_camp(request):
     try:
         tenant = Camp(schema_name=request.data['camp_domain'], name=request.data['camp_name'])
         tenant.save()
-        domain = request.data['camp_domain'] + '.localhost'
+        domain = request.data['camp_domain'] + '.campcloudpro.com:5050'
         domain = Domain(domain=domain, tenant=tenant, is_primary=True)
         domain.save()
         User.objects.create(first_name='Camp',
