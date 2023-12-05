@@ -11,6 +11,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 from .utils import generate_access_token, generate_refresh_token
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from base.url_parser import parse_url
+
 JWT_authenticator = JWTAuthentication()
 
 
@@ -98,10 +100,12 @@ def super_admin_login(request):
 
 @api_view(['POST'])
 def create_camp(request):
+    url = request.build_absolute_uri()
+    protocol, subdomain, host_name = parse_url(url)
     try:
         tenant = Camp(schema_name=request.data['camp_domain'], name=request.data['camp_name'])
         tenant.save()
-        domain = request.data['camp_domain'] + '.campcloudpro.com'
+        domain = request.data['camp_domain'] + '.' + host_name
         domain = Domain(domain=domain, tenant=tenant, is_primary=True)
         domain.save()
         User.objects.create(first_name='Camp',
@@ -120,6 +124,7 @@ def create_camp(request):
                             email=request.data['camp_admin_email'],
                             password=make_password(request.data['password']),
                             is_superuser=True,
+                            is_staff=True,
                             is_active=True
                             )
         connection.set_schema_to_public()
