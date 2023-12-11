@@ -6,3 +6,10 @@ base/__pycache__/__init__.cpython-310.pyc
 CMSAPI/__pycache__/urls.cpython-39.pyc
 CMSAPI/__pycache__/urls.cpython-39.pyc
 .idea/workspace.xml
+base/migrations/__pycache__/0001_initial.cpython-310.pyc
+base/migrations/__pycache__/0001_initial.cpython-310.pyc
+base/migrations/0001_initial.py
+.idea/workspace.xml
+base/__pycache__/views.cpython-39.pyc
+camp/migrations/__pycache__/0001_initial.cpython-310.pyc
+.idea/workspace.xml

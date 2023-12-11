@@ -1,14 +1,28 @@
 from django.contrib.auth.models import User, Group
 from django.http import HttpResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from base.utils import generate_access_token, generate_refresh_token
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.db import connection
+
+from camp.serializers import UserSerializer
+
 JWT_authenticator = JWTAuthentication()
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({"message": "User deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET'])
@@ -39,7 +53,7 @@ def auth_me(request):
                 'username': user.username,
                 'Id': user.id,
                 'email': user.email,
-                'role': 'admin',
+                'role': get_user_role(user.email, request),
                 'IsActive': user.is_active,
                 'EntryDt': user.date_joined
             }
@@ -48,15 +62,28 @@ def auth_me(request):
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-def index(request):
-    return HttpResponse("<h1>Camp Index</h1>")
-
-
 @api_view(['GET'])
 def get_auth_group(request):
     queryset = Group.objects.all()
     result_list = list(queryset.values())
     return Response(result_list)
+
+
+def get_subdomain(request):
+    host = request.get_host()  # Get the host from the request
+    host_parts = host.split('.')
+    subdomain = host_parts[0]
+
+    return subdomain
+
+
+def get_user_role(email, request):
+    subdomain = get_subdomain(request)
+    connection.set_schema_to_public()
+    user = User.objects.get(email=email)
+    role = user.groups.values_list('name', flat=True)[0]
+    connection.set_schema(subdomain, True)
+    return role
 
 
 @api_view(['POST'])
@@ -85,7 +112,7 @@ def login(request):
                         'username': user.username,
                         'Id': user.id,
                         'email': user.email,
-                        'role': 'admin',
+                        'role': get_user_role(user.email, request),
                         'IsActive': user.is_active,
                         'EntryDt': user.date_joined
                     }
@@ -99,5 +126,5 @@ def login(request):
                     content_type="application/json"
                 )
     except Exception as e:
-        return Response(e)
-    return Response("Somthing went wrong")
+        return Response()
+    return Response({"Somthing went wrong"})

@@ -8,4 +8,5 @@ urlpatterns = [
     path('auth_me/', auth_me, name='auth_me'),
     path('check_domain/', check_domain, name='check_domain'),
     path('get_auth_group/', get_auth_group, name='get_auth_group'),
+    path('get_all_camp_admin/', get_all_camp_admin, name='get_all_camp_admin'),
 ]

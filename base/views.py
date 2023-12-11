@@ -8,12 +8,29 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.db import connection
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from camp.views import get_user_role
 from .models import *
 from .utils import generate_access_token, generate_refresh_token
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from base.url_parser import parse_url
 
 JWT_authenticator = JWTAuthentication()
+
+
+@api_view(['GET'])
+def get_all_camp_admin(request):
+    users = list(User.objects.all().values())
+    for user in users:
+        user['avatar'] = ''
+        user['role'] = 'super_admin'
+    user = {
+        'allData': users,
+        'users': users,
+        'params': '',
+        'total': 1
+    }
+    return Response(user)
 
 
 @api_view(['GET'])
@@ -45,7 +62,7 @@ def auth_me(request):
                 'username': user.username,
                 'Id': user.id,
                 'email': user.email,
-                'role': 'admin',
+                'role': get_user_role(user.email, request),
                 'IsActive': user.is_active,
                 'EntryDt': user.date_joined
             }
@@ -80,7 +97,7 @@ def super_admin_login(request):
                         'username': user.username,
                         'Id': user.id,
                         'email': user.email,
-                        'role': 'admin',
+                        'role': user.groups.values_list('name', flat=True)[0],
                         'IsActive': user.is_active,
                         'EntryDt': user.date_joined
                     }
@@ -108,16 +125,22 @@ def create_camp(request):
         domain = request.data['camp_domain'] + '.' + host_name
         domain = Domain(domain=domain, tenant=tenant, is_primary=True)
         domain.save()
-        User.objects.create(first_name='Camp',
-                            last_name='Admin',
-                            username=request.data['camp_domain'],
-                            email=request.data['camp_admin_email'],
-                            password=make_password(request.data['password']),
-                            is_superuser=False,
-                            is_staff=True,
-                            is_active=True
-                            )
+        user = User.objects.create(first_name='Camp',
+                                   last_name='Admin',
+                                   username=request.data['camp_domain'],
+                                   email=request.data['camp_admin_email'],
+                                   password=make_password(request.data['password']),
+                                   is_superuser=False,
+                                   is_staff=True,
+                                   is_active=True
+                                   )
+        group = Group.objects.get(pk=2)
+        group.user_set.add(user)
         connection.set_schema(request.data['camp_domain'], True)
+        Group.objects.create(name='camp_admin')
+        Group.objects.create(name='parent')
+        Group.objects.create(name='student')
+        Group.objects.create(name='teacher')
         User.objects.create(first_name='Camp',
                             last_name='Admin',
                             username=request.data['camp_domain'],
@@ -129,8 +152,8 @@ def create_camp(request):
                             )
         connection.set_schema_to_public()
         return Response({'status': 'Camp Created'})
-    except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    except Exception as ex:
+        return Response(ex, status=status.HTTP_400_BAD_REQUEST)
 
 
 def index(request):

@@ -94,30 +94,33 @@ TEMPLATES = [
 WSGI_APPLICATION = 'CMSAPI.wsgi.application'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django_tenants.postgresql_backend',
-#         'NAME': 'cmsdb',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': 'localhost',
-#         'PORT': 5432
-#     }
-# }
+# Database local
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'cms_db',
+        'NAME': 'db_cms',
         'USER': 'cms_db_admin',
         'PASSWORD': 'CMSAdmin@2023',
-        'HOST': '69.57.161.223',
+        'HOST': 'localhost',
         'PORT': 5432
     }
 }
+
+# live
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django_tenants.postgresql_backend',
+#         'NAME': 'cms_db',
+#         'USER': 'cms_db_admin',
+#         'PASSWORD': 'CMSAdmin@2023',
+#         'HOST': '69.57.161.223',
+#         'PORT': 5432
+#     }
+# }
 
 DATABASE_ROUTERS = (
     'django_tenants.routers.TenantSyncRouter',
