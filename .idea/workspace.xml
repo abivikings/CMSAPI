@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cfacc487-6070-4930-b1de-92490e39f325" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/APIComponents/GetUserRole.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/camp/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMSAPI/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/CMSAPI/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camp/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/camp/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/camp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/camp/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
