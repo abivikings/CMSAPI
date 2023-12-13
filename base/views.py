@@ -134,22 +134,25 @@ def create_camp(request):
                                    is_staff=True,
                                    is_active=True
                                    )
-        group = Group.objects.get(pk=2)
+        group = Group.objects.get(pk=1)
         group.user_set.add(user)
+
         connection.set_schema(request.data['camp_domain'], True)
         Group.objects.create(name='camp_admin')
         Group.objects.create(name='parent')
         Group.objects.create(name='student')
         Group.objects.create(name='teacher')
-        User.objects.create(first_name='Camp',
-                            last_name='Admin',
-                            username=request.data['camp_domain'],
-                            email=request.data['camp_admin_email'],
-                            password=make_password(request.data['password']),
-                            is_superuser=True,
-                            is_staff=True,
-                            is_active=True
-                            )
+        camp_user = User.objects.create(first_name='Camp',
+                                        last_name='Admin',
+                                        username=request.data['camp_domain'],
+                                        email=request.data['camp_admin_email'],
+                                        password=make_password(request.data['password']),
+                                        is_superuser=True,
+                                        is_staff=True,
+                                        is_active=True
+                                        )
+        camp_group = Group.objects.get(pk=1)
+        camp_group.user_set.add(camp_user)
         connection.set_schema_to_public()
         return Response({'status': 'Camp Created'})
     except Exception as ex:
