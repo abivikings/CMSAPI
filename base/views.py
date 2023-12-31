@@ -134,7 +134,7 @@ def create_camp(request):
                                    is_staff=True,
                                    is_active=True
                                    )
-        group = Group.objects.get(pk=1)
+        group = Group.objects.get(pk=2)
         group.user_set.add(user)
 
         connection.set_schema(request.data['camp_domain'], True)
