@@ -81,7 +81,7 @@ def super_admin_login(request):
     email = request.data['email']
     response = Response()
     try:
-        user = User.objects.get(email=email)
+        user = User.objects.get(email=email, is_superuser=True)
         refresh = RefreshToken.for_user(user)
         if user.check_password(request.data['password']):
             if user:
@@ -111,7 +111,7 @@ def super_admin_login(request):
                     content_type="application/json"
                 )
     except Exception as e:
-        return Response(e)
+        return Response("Super Admin access only")
     return Response("Somthing went wrong")
 
 
