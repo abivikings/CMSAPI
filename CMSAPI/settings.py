@@ -101,10 +101,10 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'db_cms',
+        'NAME': 'cms_test_db',
         'USER': 'cms_db_admin',
         'PASSWORD': 'CMSAdmin@2023',
-        'HOST': 'localhost',
+        'HOST': '69.57.161.223',
         'PORT': 5432
     }
 }
