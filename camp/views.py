@@ -9,10 +9,26 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from base.utils import generate_access_token, generate_refresh_token
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db import connection
+from .models import *
 
-from camp.serializers import UserSerializer
+from camp.serializers import *
 
 JWT_authenticator = JWTAuthentication()
+
+
+class TeacherViewSet(viewsets.ModelViewSet):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+
+class ParentViewSet(viewsets.ModelViewSet):
+    queryset = Parent.objects.all()
+    serializer_class = ParentSerializer
+
+
+class StudentViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):

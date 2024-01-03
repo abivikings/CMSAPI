@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User, Group
 from APIComponents.GetUserRole import GetUserRole as UserRole
+from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -36,3 +37,22 @@ class UserSerializer(serializers.ModelSerializer):
             instance.groups.add(group)
 
         return instance
+
+
+class TeacherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = '__all__'
+
+
+class ParentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Parent
+        fields = '__all__'
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    parent = Parent.objects.all()
+    class Meta:
+        model = Student
+        fields = '__all__'

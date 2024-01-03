@@ -8,14 +8,23 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.db import connection
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from camp.views import get_user_role
 from .models import *
 from .utils import generate_access_token, generate_refresh_token
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from base.url_parser import parse_url
+from APIComponents.CampListProcess import CampList as cmpList
 
 JWT_authenticator = JWTAuthentication()
+
+
+@api_view(['GET'])
+def get_all_camp(request):
+    camp_list = cmpList.get_camp_user()
+    return Response(camp_list)
+
+
+@api_view(['GET'])
 
 
 @api_view(['GET'])

@@ -9,4 +9,5 @@ urlpatterns = [
     path('check_domain/', check_domain, name='check_domain'),
     path('get_auth_group/', get_auth_group, name='get_auth_group'),
     path('get_all_camp_admin/', get_all_camp_admin, name='get_all_camp_admin'),
+    path('get_all_camp/', get_all_camp, name='get_all_camp'),
 ]
