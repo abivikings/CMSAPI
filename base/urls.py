@@ -10,4 +10,6 @@ urlpatterns = [
     path('get_auth_group/', get_auth_group, name='get_auth_group'),
     path('get_all_camp_admin/', get_all_camp_admin, name='get_all_camp_admin'),
     path('get_all_camp/', get_all_camp, name='get_all_camp'),
+    path('get_camp_details/', get_camp_details, name='get_camp_details'),
+    path('camp_total/', camp_total, name='camp_total'),
 ]

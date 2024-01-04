@@ -19,12 +19,23 @@ JWT_authenticator = JWTAuthentication()
 
 
 @api_view(['GET'])
+def camp_total(request):
+    all_camp_total = cmpList.camp_total()
+    return Response(all_camp_total)
+
+
+@api_view(['GET'])
 def get_all_camp(request):
-    camp_list = cmpList.get_camp_user()
+    camp_list = cmpList.get_all_camp()
     return Response(camp_list)
 
 
 @api_view(['GET'])
+def get_camp_details(request):
+    if request.method == 'GET':
+        domain_name = request.GET.get('domain_name')
+        camp = cmpList.get_camp_info(domain_name)
+        return Response(camp)
 
 
 @api_view(['GET'])

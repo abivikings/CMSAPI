@@ -26,3 +26,5 @@ camp/migrations/__pycache__/0001_initial.cpython-310.pyc
 *.pyc
 .idea/workspace.xml
 *.xml
+*.pyc
+*.xml
